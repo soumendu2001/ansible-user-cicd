@@ -15,7 +15,7 @@
       loop: >-
         {{
           users
-          | map(attribute='role')
+          | map(attribute='group_name')
           | map('extract', roles)
           | map(attribute='groups')
           | flatten
