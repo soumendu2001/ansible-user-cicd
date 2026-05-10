@@ -1,50 +1,71 @@
-
-- name: Apply User Configuration
+- name: Apply User configuration
   hosts: target
   become: yes
 
   vars_files:
-    - users.yml
-    - user_roles.yml
+    - ../vars/users.yml
+    - ../vars/roles.yml
 
   tasks:
 
-    - name: Ensure groups exist
-      group:
+    - name: Ensure existence of groups
+      ansible.builtin.group:
         name: "{{ item }}"
         state: present
       loop: >-
-          {{
-            users | map(attribute='role')
-                  | map('extract',roles)
-                  | map(attribute='groups')
-                  | flatten
-                  | unique
-           }}    
-        
+        {{
+          users
+          | map(attribute='role')
+          | map('extract', roles)
+          | map(attribute='groups')
+          | flatten
+          | unique
+        }}
 
-    - name: Manage users
-      user:
-        name: "{{ item.name }}"
-        state: "{{ item.state }}"
-        shell: "{{ item.shell | default('/bin/bash') }}"
+    - name: Create Users
+      ansible.builtin.user:
+        name: "{{ item.username }}"
         groups: "{{ roles[item.role].groups | join(',') }}"
         append: yes
+        password_lock: true
+        shell: "{{ item.shell }}"
+        state: "{{ item.state }}"
       loop: "{{ users }}"
 
-    - name: Add SSH keys
-      authorized_key:
-        user: "{{ item.name }}"
-        key: "{{ lookup('file', item.ssh_key) }}"
-      when: item.state == 'present'
+    - name: Ensure SSH Directories exist
+      ansible.builtin.file:
+        path: "/home/{{ item.username }}/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+      when: item.state == "present"
       loop: "{{ users }}"
 
+    - name: Create SSH Key pair for users (control node)
+      delegate_to: localhost
+      ansible.builtin.openssh_keypair:
+        path: "../files/{{ item.username }}"
+        type: ed25519
+        mode: '0600'
+      when: item.state == "present"
+      loop: "{{ users }}"
 
-      - name: Configure sudo access
-       copy:
-         dest: "/etc/sudoers.d/{{ item.name }}"
-         content: "{{ item.name }} {{ roles[item.role].sudo }}"
-         mode: '0440'
-         validate: '/usr/sbin/visudo -cf %s'
-       when: roles[item.role].sudo != ""
-       loop: "{{ users }}"
+    - name: Add SSH key to authorized Key
+      ansible.posix.authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ lookup('file', '../files/' + item.username + '.pub') }}"
+        state: present
+      when: item.state == "present"
+      loop: "{{ users }}"
+
+    - name: Setup sudo access
+      ansible.builtin.copy:
+        dest: "/etc/sudoers.d/{{ item.username }}"
+        content: "{{ item.username }} {{ roles[item.role].sudo | trim }}"
+        mode: '0440'
+        validate: '/usr/sbin/visudo -cf %s'
+      when:
+        - item.state == "present"
+        - roles[item.role].sudo | length > 0
+      loop: "{{ users }}"
