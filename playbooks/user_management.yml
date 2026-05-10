@@ -71,7 +71,7 @@
     - name: Setup sudo access
       ansible.builtin.copy:
         dest: "/etc/sudoers.d/{{ item.name }}"
-        content: "{{ item.name }} {{ user_roles[item.group_name].sudo | trim }}"
+        content: "{{ item.name }} {{ user_roles[item.group_name].sudo | trim }}\n"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
