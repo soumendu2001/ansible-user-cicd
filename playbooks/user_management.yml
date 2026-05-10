@@ -25,7 +25,7 @@
     - name: Create Users
       ansible.builtin.user:
         name: "{{ item.name }}"
-        groups: "{{ roles[item.role].groups | join(',') }}"
+        groups: "{{ roles[item.group_name].groups | join(',') }}"
         append: yes
         password_lock: true
         shell: "{{ item.shell }}"
@@ -69,10 +69,10 @@
     - name: Setup sudo access
       ansible.builtin.copy:
         dest: "/etc/sudoers.d/{{ item.name }}"
-        content: "{{ item.name }} {{ roles[item.role].sudo | trim }}"
+        content: "{{ item.name }} {{ roles[item.group_name].sudo | trim }}"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
         - item.state == "present"
-        - roles[item.role].sudo | length > 0
+        - roles[item.group_name].sudo | length > 0
       loop: "{{ users }}"
