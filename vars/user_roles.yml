@@ -10,13 +10,13 @@ roles:
 
   readonly:
     groups: ["readonly"]
-    sudo: "NONE"
+    sudo: ""
 
   developers:
      groups: ["developers"]
-     sudo: "NONE"
+     sudo: ""
    
    management:
       groups: ["management"]
-      sudo: "NONE"
+      sudo: ""
 
