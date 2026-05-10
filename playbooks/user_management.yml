@@ -48,11 +48,12 @@
       when: item.state == "present"
       loop: "{{ users }}"
 
-    - name: Create SSH Key pair for users (control node)
+    - name: Generate SSH Key pair for users (control node)
       ansible.builtin.openssh_keypair:
         path: "{{ playbook_dir }}/../files/{{ item.name }}"
         type: ed25519
         mode: '0600'
+      register: ssh_keys
       delegate_to: localhost
       run_once: false
       when: item.state == "present"
@@ -61,15 +62,16 @@
     - name: Add SSH key to authorized Key
       ansible.posix.authorized_key:
         user: "{{ item.name }}"
-        key: "{{ lookup('file', playbook_dir + '/../files/' + item.name + '.pub') }}"
+        key: "{{ item.public_key }"
         state: present
-      when: item.state == "present"
-      loop: "{{ users }}"
+      loop: "{{ ssh_keys.results}}"
+      when: item.item.state == "present"
+      
 
     - name: Setup sudo access
       ansible.builtin.copy:
         dest: "/etc/sudoers.d/{{ item.name }}"
-        content: "{{ item.name }} {{ roles[item.group_name].sudo | trim }}"
+        content: "{{ item.name }} {{ user_roles[item.group_name].sudo | trim }}"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
