@@ -34,7 +34,7 @@
 
     - name: Ensure SSH Directories exist
       ansible.builtin.file:
-        path: "/home/{{ item.username }}/.ssh"
+        path: "/home/{{ item.name }}/.ssh"
         state: directory
         mode: '0700'
         owner: "{{ item.name }}"
