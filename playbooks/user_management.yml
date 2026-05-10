@@ -31,6 +31,12 @@
         shell: "{{ item.shell }}"
         state: "{{ item.state }}"
       loop: "{{ users }}"
+    - name: Ensure files directory exists
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/../files
+        state: directory
+      delegate_to: localhost
+      run_once: true
 
     - name: Ensure SSH Directories exist
       ansible.builtin.file:
@@ -44,16 +50,18 @@
 
     - name: Create SSH Key pair for users (control node)
       ansible.builtin.openssh_keypair:
-        path: "/files/{{ item.name }}"
+        path: "{{ playbook_dir }}/../files/{{ item.name }}"
         type: ed25519
         mode: '0600'
+      delegate_to: localhost
+      run_once: false
       when: item.state == "present"
       loop: "{{ users }}"
 
     - name: Add SSH key to authorized Key
       ansible.posix.authorized_key:
         user: "{{ item.name }}"
-        key: "{{ lookup('file', '../files/' + item.name + '.pub') }}"
+        key: "{{ lookup('file', playbook_dir + '/../files/' + item.name + '.pub') }}"
         state: present
       when: item.state == "present"
       loop: "{{ users }}"
