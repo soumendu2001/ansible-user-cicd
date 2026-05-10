@@ -50,11 +50,11 @@
       loop: "{{ users }}"
 
     - name: Generate SSH Key pair (idempotent)
-      ansible.builtin.openssh_keypair:
+      community.crypto.openssh_keypair:
          path: "{{ playbook_dir }}/../files/{{ item.name }}"
          type: ed25519
-      args:
-        creates: "{{ playbook_dir }}/../files/{{ item.name }}"
+         mode: '0600'
+         regenerate: full_idempotence
       delegate_to: localhost
       register: ssh_keys
       loop: "{{ users }}"
