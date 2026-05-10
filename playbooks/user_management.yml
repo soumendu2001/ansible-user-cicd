@@ -4,7 +4,7 @@
 
   vars_files:
     - ../vars/users.yml
-    - ../vars/roles.yml
+    - ../vars/user_roles.yml
 
   tasks:
 
