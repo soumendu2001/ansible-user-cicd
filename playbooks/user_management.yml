@@ -25,7 +25,7 @@
     - name: Create Users
       ansible.builtin.user:
         name: "{{ item.name }}"
-        groups: "{{ roles[item.group_name].groups | join(',') }}"
+        groups: "{{ user_roles[item.group_name].groups | join(',') }}"
         append: yes
         password_lock: true
         shell: "{{ item.shell }}"
