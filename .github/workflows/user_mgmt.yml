@@ -28,3 +28,21 @@ jobs:
       - name: Run playbook
         run: |
           ansible-playbook -i inventory playbooks/user_management.yml
+
+      - name: Validate user
+        run: |
+          ansible target -i inventory -m command -a "id sudip"
+      - name: Validate Groups
+        run: |
+          ansible target -i inventory -m command -a "groups sudip"
+
+      - name: CHeck SSH Directory
+        run: |
+           ansible target -i inventory -m shell -a "ls -ld /home/sudip/.ssh"
+
+      - name: Check Sudo
+        run: |
+          ansible target -i inventory -m shell -a "sudo -l -U sudip"
+          
+
+      
