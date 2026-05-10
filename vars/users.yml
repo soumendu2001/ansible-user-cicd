@@ -28,8 +28,14 @@ users:
     shell: /bin/bash
     ssh_key: charlie.pub
 
+  - name: julia
+    group_name: SIAM
+    state: present
+    shell: /bin/bash
+    ssh_key: julia.pub
 
-  - name: Sam
+
+  - name: sam
     group_name: management
     state: present
     shell: /bin/bash
