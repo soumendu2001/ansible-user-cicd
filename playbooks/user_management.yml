@@ -76,5 +76,5 @@
         validate: '/usr/sbin/visudo -cf %s'
       when:
         - item.state == "present"
-        - roles[item.group_name].sudo | length > 0
+        - user_roles[item.group_name].sudo | length > 0
       loop: "{{ users }}"
