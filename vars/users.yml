@@ -35,9 +35,9 @@ users:
     shell: /bin/bash
     ssh_key: sam.pub
 
-  - name: charlie
+  - name: max
     group_name: readonly
     state: present
     shell: /bin/bash
-    ssh_key: charlie.pub
+    ssh_key: max.pub
 
