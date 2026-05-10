@@ -16,13 +16,12 @@
         {{
           users
           | map(attribute='group_name')
-          | map('extract', roles)
+          | map('extract', user_roles)
           | map(attribute='groups')
           | flatten
           | unique
         }}
 
-    
     - name: Create Users
       ansible.builtin.user:
         name: "{{ item.name }}"
