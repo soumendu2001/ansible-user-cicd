@@ -27,4 +27,4 @@ jobs:
 
       - name: Run playbook
         run: |
-          ansible-playbook -i inventory/inventory playbooks/user_management.yml
+          ansible-playbook -i inventory playbooks/user_management.yml
