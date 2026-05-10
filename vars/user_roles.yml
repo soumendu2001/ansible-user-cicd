@@ -14,7 +14,7 @@ roles:
 
   developers:
      groups: ["developers"]
-     sudo: "NONE
+     sudo: "NONE"
    
    management:
       groups: ["management"]
