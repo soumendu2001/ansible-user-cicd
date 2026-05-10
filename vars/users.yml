@@ -30,7 +30,7 @@ users:
 
 
   - name: Sam
-    group_name_name: management
+    group_name: management
     state: present
     shell: /bin/bash
     ssh_key: sam.pub
