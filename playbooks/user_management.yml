@@ -27,6 +27,7 @@
         name: "{{ item.name }}"
         groups: "{{ user_roles[item.group_name].groups | join(',') }}"
         append: yes
+        create_home: yes
         password_lock: true
         shell: "{{ item.shell }}"
         state: "{{ item.state }}"
@@ -48,25 +49,24 @@
       when: item.state == "present"
       loop: "{{ users }}"
 
-    - name: Generate SSH Key pair for users (control node)
+    - name: Generate SSH Key pair (idempotent)
       ansible.builtin.openssh_keypair:
-        path: "{{ playbook_dir }}/../files/{{ item.name }}"
-        type: ed25519
-        mode: '0600'
-      register: ssh_keys
+         path: "{{ playbook_dir }}/../files/{{ item.name }}"
+         type: ed25519
+      args:
+        creates: "{{ playbook_dir }}/../files/{{ item.name }}"
       delegate_to: localhost
-      run_once: false
-      when: item.state == "present"
+      register: ssh_keys
       loop: "{{ users }}"
+      when: item.state == "present"
 
-    - name: Add SSH key to authorized Key
+    - name: Set authorized key (single source of truth)
       ansible.posix.authorized_key:
-        user: "{{ item.item.name }}"
-        key: "{{ item.public_key }}"
-        state: present
-      loop: "{{ ssh_keys.results}}"
-      when: item.item.state == "present"
-      
+         user: "{{ item.item.name }}"
+         key: "{{ item.public_key }}"
+         exclusive: true
+      loop: "{{ ssh_keys.results }}"
+
 
     - name: Setup sudo access
       ansible.builtin.copy:
