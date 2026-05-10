@@ -37,7 +37,7 @@ users:
 
   - name: sam
     group_name: management
-    state: absent
+    state: present
     shell: /bin/bash
     ssh_key: sam.pub
 
