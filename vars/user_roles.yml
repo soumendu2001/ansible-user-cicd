@@ -1,1 +1,22 @@
 
+roles:
+  webadmin:
+    groups: ["webadmin"]
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+
+  dbadmin:
+    groups: ["dbadmin"]
+    sudo: "ALL=(ALL) ALL"
+
+  readonly:
+    groups: ["readonly"]
+    sudo: "NONE"
+
+  developers:
+     groups: ["developers"]
+     sudo: "NONE
+   
+   management:
+     group: ["management"]
+     sudo: "NONE"
+
