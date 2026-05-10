@@ -61,7 +61,7 @@
 
     - name: Add SSH key to authorized Key
       ansible.posix.authorized_key:
-        user: "{{ item.name }}"
+        user: "{{ item.item.name }}"
         key: "{{ item.public_key }}"
         state: present
       loop: "{{ ssh_keys.results}}"
