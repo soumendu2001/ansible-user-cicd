@@ -24,7 +24,7 @@
 
     - name: Create Users
       ansible.builtin.user:
-        name: "{{ item.username }}"
+        name: "{{ item.name }}"
         groups: "{{ roles[item.role].groups | join(',') }}"
         append: yes
         password_lock: true
@@ -37,15 +37,15 @@
         path: "/home/{{ item.username }}/.ssh"
         state: directory
         mode: '0700'
-        owner: "{{ item.username }}"
-        group: "{{ item.username }}"
+        owner: "{{ item.name }}"
+        group: "{{ item.name }}"
       when: item.state == "present"
       loop: "{{ users }}"
 
     - name: Create SSH Key pair for users (control node)
       delegate_to: localhost
       ansible.builtin.openssh_keypair:
-        path: "../files/{{ item.username }}"
+        path: "../files/{{ item.name }}"
         type: ed25519
         mode: '0600'
       when: item.state == "present"
@@ -53,16 +53,16 @@
 
     - name: Add SSH key to authorized Key
       ansible.posix.authorized_key:
-        user: "{{ item.username }}"
-        key: "{{ lookup('file', '../files/' + item.username + '.pub') }}"
+        user: "{{ item.name }}"
+        key: "{{ lookup('file', '../files/' + item.name + '.pub') }}"
         state: present
       when: item.state == "present"
       loop: "{{ users }}"
 
     - name: Setup sudo access
       ansible.builtin.copy:
-        dest: "/etc/sudoers.d/{{ item.username }}"
-        content: "{{ item.username }} {{ roles[item.role].sudo | trim }}"
+        dest: "/etc/sudoers.d/{{ item.name }}"
+        content: "{{ item.name }} {{ roles[item.role].sudo | trim }}"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
