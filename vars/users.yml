@@ -1,1 +1,33 @@
 
+users:
+  - name: alice
+    role: webadmin
+    state: present
+    shell: /bin/bash
+    ssh_key: alice.pub
+
+  - name: bob
+    role: dbadmin
+    state: present
+    shell: /bin/bash
+    ssh_key: bob.pub
+
+  - name: charlie
+    role: developers
+    state: present
+    shell: /bin/bash
+    ssh_key: charlie.pub
+
+
+  - name: Sam
+    role: management
+    state: present
+    shell: /bin/bash
+    ssh_key: sam.pub
+
+  - name: charlie
+    role: readonly
+    state: present
+    shell: /bin/bash
+    ssh_key: charlie.pub
+
