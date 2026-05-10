@@ -43,9 +43,8 @@
       loop: "{{ users }}"
 
     - name: Create SSH Key pair for users (control node)
-      delegate_to: localhost
       ansible.builtin.openssh_keypair:
-        path: "../files/{{ item.name }}"
+        path: "/files/{{ item.name }}"
         type: ed25519
         mode: '0600'
       when: item.state == "present"
