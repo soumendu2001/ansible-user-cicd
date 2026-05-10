@@ -1,42 +1,42 @@
 
 users:
   - name: sudip
-    role: administrator
+    group_name: administrator
     state: present
     shell: /bin/bash
     ssh_key: sudip.pub
   - name: soumyendu
-    role: webadmin
+    group_name: webadmin
     state: present
     shell: /bin/bash
     ssh_key: soumyendu.pub
   - name: alice
-    role: webadmin
+    group_name: webadmin
     state: present
     shell: /bin/bash
     ssh_key: alice.pub
 
   - name: bob
-    role: dbadmin
+    group_name: dbadmin
     state: present
     shell: /bin/bash
     ssh_key: bob.pub
 
   - name: charlie
-    role: developers
+    group_name: developers
     state: present
     shell: /bin/bash
     ssh_key: charlie.pub
 
 
   - name: Sam
-    role: management
+    group_name_name: management
     state: present
     shell: /bin/bash
     ssh_key: sam.pub
 
   - name: charlie
-    role: readonly
+    group_name: readonly
     state: present
     shell: /bin/bash
     ssh_key: charlie.pub
