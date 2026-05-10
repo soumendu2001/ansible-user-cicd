@@ -1,8 +1,8 @@
 
 roles:
- administrator:
-   groups: ["administrator"]
-   sudo: "ALL=(ALL) NOPASSWD:ALL"
+  administrator:
+    groups: ["administrator"]
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
   webadmin:
     groups: ["webadmin"]
     sudo: "ALL=(ALL) NOPASSWD:ALL"
