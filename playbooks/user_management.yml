@@ -33,7 +33,7 @@
       loop: "{{ users }}"
     - name: Ensure files directory exists
       ansible.builtin.file:
-        path: "{{ playbook_dir }}/../files
+        path: "{{ playbook_dir }}/../files"
         state: directory
       delegate_to: localhost
       run_once: true
