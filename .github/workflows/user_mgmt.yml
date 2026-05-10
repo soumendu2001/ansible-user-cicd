@@ -38,7 +38,7 @@ jobs:
 
       - name: CHeck SSH Directory
         run: |
-           ansible target -i inventory -m shell -a "ls -ld /home/sudip/.ssh"
+           ansible target -i inventory -m shell -a "sudo ls -ld /home/sudip/.ssh"
 
       - name: Check Sudo
         run: |
