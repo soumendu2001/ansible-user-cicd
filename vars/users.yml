@@ -7,7 +7,7 @@ users:
     ssh_key: sudip.pub
   - name: soumyendu
     group_name: webadmin
-    state: absent
+    state: present
     shell: /bin/bash
     ssh_key: soumyendu.pub
   - name: alice
