@@ -2,54 +2,54 @@
 users:
   - name: sudip
     group_name: administrator
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: sudip.pub
   - name: soumyendu
     group_name: webadmin
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: soumyendu.pub
   - name: alice
     group_name: webadmin
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: alice.pub
 
   - name: bob
     group_name: dbadmin
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: bob.pub
 
   - name: charlie
     group_name: developers
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: charlie.pub
 
   - name: julia
     group_name: SIAM
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: julia.pub
 
 
   - name: sam
     group_name: management
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: sam.pub
 
   - name: max
     group_name: readonly
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: max.pub
 
   - name: David
     group_name: management
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: david.pub
 
