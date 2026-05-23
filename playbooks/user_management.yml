@@ -79,13 +79,11 @@
         - item.value.sudo | length > 0
       loop: "{{ user_roles | dict2items }}"
 
-    - name: Test sudo for all sudo-enabled users
-      ansible.builtin.command: sudo whoami
-      become: yes
-      become_user: "{{ item.name }}"
-      loop: "{{ users }}"
-      when:
-        - item.state == "present"
-        - user_roles[item.group_name].sudo | length > 0
+    - name: Fast sudo validation
+      shell: |
+        {% for user in users if user.state == "present" and user_roles[user.group_name].sudo|length > 0 %}
+         echo "Testing {{ user.name }}"
+        sudo -u {{ user.name }} sudo whoami
+        {% endfor %}
 
 
