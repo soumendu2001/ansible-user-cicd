@@ -78,3 +78,9 @@
       when:
         - item.value.sudo | length > 0
       loop: "{{ user_roles | dict2items }}"
+
+    - name: Test sudo for webadmin group
+      run: |
+        ansible target -i inventory -m shell -a "sudo -u soumyendu sudo whoami"
+        ansible target -i inventory -m shell -a "sudo -u alice sudo whoami"
+
