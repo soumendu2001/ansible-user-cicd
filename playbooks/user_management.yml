@@ -76,6 +76,5 @@
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
-        - item.state == "present"
         - item.value.sudo | length > 0
       loop: "{{ user_roles | dict2items }}"
