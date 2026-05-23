@@ -24,7 +24,7 @@ users:
 
   - name: charlie
     group_name: developers
-    state: present
+    state: absent
     shell: /bin/bash
 
   - name: julia
@@ -39,11 +39,11 @@ users:
     
   - name: max
     group_name: readonly
-    state: present
+    state: absent
     shell: /bin/bash
   
   - name: David
     group_name: management
-    state: present
+    state: absent
     shell: /bin/bash
     
