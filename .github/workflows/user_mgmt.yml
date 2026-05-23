@@ -31,9 +31,4 @@ jobs:
 
       - name: Run playbook
         run: |
-          ansible-playbook -i inventory playbooks/user_management.yml
-
-      - name: Test SSH Access
-        run: |
-          ssh -i files/soumyendu soumyendu@54.173.158.195
-      
+          ansible-playbook -i inventory playbooks/user_management.yml      
