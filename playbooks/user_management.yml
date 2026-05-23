@@ -66,6 +66,7 @@
          key: "{{ item.public_key }}"
          exclusive: true
       loop: "{{ ssh_keys.results }}"
+      when: item.public_key is defined
 
 
     - name: Setup sudo access
