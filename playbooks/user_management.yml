@@ -71,11 +71,11 @@
 
     - name: Setup sudo access
       ansible.builtin.copy:
-        dest: "/etc/sudoers.d/{{ item.name }}"
-        content: "{{ item.name }} {{ user_roles[item.group_name].sudo | trim }}\n"
+        dest: "/etc/sudoers.d/{{ item.key }}"
+        content: "{{ item.keyname }} {{ item.value.sudo }}\n"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
         - item.state == "present"
-        - user_roles[item.group_name].sudo | length > 0
-      loop: "{{ users }}"
+        - item.value.sudo | length > 0
+      loop: "{{ user_roles | dict2items }}"
