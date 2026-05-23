@@ -2,7 +2,7 @@
 users:
   - name: sudip
     group_name: administrator
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: sudip.pub
   - name: soumyendu
@@ -49,7 +49,7 @@ users:
 
   - name: David
     group_name: management
-    state: present
+    state: absent
     shell: /bin/bash
     ssh_key: david.pub
 
