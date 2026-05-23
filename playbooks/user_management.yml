@@ -79,11 +79,3 @@
         - item.value.sudo | length > 0
       loop: "{{ user_roles | dict2items }}"
 
-    - name: Fast sudo validation
-      shell: |
-        {% for user in users if user.state == "present" and user_roles[user.group_name].sudo|length > 0 %}
-         echo "Testing {{ user.name }}"
-        sudo -u {{ user.name }} sudo whoami
-        {% endfor %}
-
-
