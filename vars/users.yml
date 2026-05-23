@@ -46,4 +46,9 @@ users:
     group_name: management
     state: present
     shell: /bin/bash
+
+  - name: Adam
+    group_name: SIAM
+    state: present
+    shell: /bin/bash
     
