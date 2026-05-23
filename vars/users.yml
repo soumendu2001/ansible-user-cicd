@@ -47,3 +47,10 @@ users:
     shell: /bin/bash
     ssh_key: max.pub
 
+  - name: David
+    group_name: management
+    state: present
+    shell: /bin/bash
+    ssh_key: david.pub
+
+
