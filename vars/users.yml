@@ -24,31 +24,23 @@ users:
 
   - name: charlie
     group_name: developers
-    state: present          
-
-
-
-   
+    state: present           
 
   - name: julia
     group_name: SIAM
     state: present
     shell: /bin/bash
     
-
-
   - name: sam
     group_name: management
     state: present
     shell: /bin/bash
     
-
   - name: max
     group_name: readonly
     state: present
     shell: /bin/bash
-    
-
+  
   - name: David
     group_name: management
     state: present
