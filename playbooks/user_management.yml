@@ -72,7 +72,7 @@
     - name: Setup sudo access
       ansible.builtin.copy:
         dest: "/etc/sudoers.d/{{ item.key }}"
-        content: "{{ item.keyname }} {{ item.value.sudo }}\n"
+        content: "%{{ item.key }} {{ item.value.sudo }}\n"
         mode: '0440'
         validate: '/usr/sbin/visudo -cf %s'
       when:
