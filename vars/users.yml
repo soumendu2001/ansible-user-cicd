@@ -24,7 +24,8 @@ users:
 
   - name: charlie
     group_name: developers
-    state: absent           
+    state: absent
+    shell: /bin/bash
 
   - name: julia
     group_name: SIAM
