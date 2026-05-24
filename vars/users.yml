@@ -51,4 +51,10 @@ users:
     group_name: SIAM
     state: present
     shell: /bin/bash
+
+  
+  - name: Martyna
+    group_name: Management
+    state: present
+    shell: /bin/bash
     
