@@ -54,7 +54,7 @@ users:
 
   
   - name: Martyna
-    group_name: Management
+    group_name: management
     state: present
     shell: /bin/bash
     
